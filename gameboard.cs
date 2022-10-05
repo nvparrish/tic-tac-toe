@@ -13,7 +13,8 @@ class GameBoard {
 	public void Reset() {
 		grid = new char [,] { { '1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'} };
 	}
-	public bool SetSquare(char player, ushort square) {
+	public bool SetSquare(char player, ushort choice) {
+		int square = choice - 1;
 		int row = square / 3;
 		int col = square % 3;
 		char core = (char)('1' + 3*row + col);
