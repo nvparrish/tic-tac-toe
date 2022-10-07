@@ -1,3 +1,4 @@
+using System.Linq;
 
 class GameBoard {
 	char [,] grid = new char [,] { { '1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'} };
@@ -38,42 +39,23 @@ class GameBoard {
 			return false;
 		}
 	}
+
 	bool CheckSquare(char player, int square)
 	{
-		return CheckRow(player, square/3) || CheckCol(player, square%3) || CheckDiagonal(player, square);
+		return CheckRow(player, square/3) || CheckCol(player, square%3) || CheckDiagonal(player);
 	}
 
 	bool CheckRow(char player, int row) {
-		return (grid[row,0] == player && 
-			grid[row,1] == player && 
-			grid[row,2] == player);
+		return (GridIterators.SliceRow(grid, row).ToList().TrueForAll(i => i.Equals(player)));
 	}
 	
 	bool CheckCol(char player, int col) {
-		return (grid[0,col] == player && 
-			grid[1,col] == player && 
-			grid[2,col] == player);
+		return (GridIterators.SliceCol(grid, col).ToList().TrueForAll(i => i.Equals(player)));
 	}
 
-	bool CheckDiagonal(char player, int square) {
-		if (square == 0 || square == 8){
-			return (grid[0,0] == player && 
-				grid[1,1] == player &&
-				grid[2,2] == player);
-		} else if (square == 2 || square == 6) {
-			return (grid[0,2] == player && 
-				grid[1,1] == player &&
-				grid[2,0] == player);
-		} else if (square == 4) {
-			return ((grid[0,0] == player && 
-				grid[1,1] == player &&
-				grid[2,2] == player) || 
-				(grid[0,2] == player && 
-				grid[1,1] == player &&
-				grid[2,0] == player));
-
-		}
-		return false;
+	bool CheckDiagonal(char player) {
+		return (GridIterators.SliceDiag(grid).ToList().TrueForAll(i => i.Equals(player)))
+			|| (GridIterators.SliceCrossDiag(grid).ToList().TrueForAll(i => i.Equals(player)));
 	}
 
 	public bool IsGameOver() {
