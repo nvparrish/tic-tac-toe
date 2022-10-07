@@ -2,6 +2,8 @@
 class GameBoard {
 	char [,] grid = new char [,] { { '1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'} };
 	bool gameOver = false;
+	ushort roundCount = 0;
+	char winner = ' ';
 	public GameBoard() {
 	}
 	public void Display() {
@@ -23,6 +25,13 @@ class GameBoard {
 			// Suitable to be replaced
 			grid[row, col] = player;
 			gameOver = CheckSquare(player, square);
+			if (gameOver) {
+				winner = player;
+			}
+			roundCount += 1;
+			if (roundCount >= 3*3) {
+				gameOver = true; // Tie
+			}
 			return true;
 		} else {
 			// Unavailable square
@@ -69,5 +78,9 @@ class GameBoard {
 
 	public bool IsGameOver() {
 		return gameOver;
+	}
+
+	public char GetWinner() {
+		return winner;
 	}
 }

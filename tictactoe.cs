@@ -13,9 +13,13 @@ class TicTacToe {
 				System.Console.Write("Invalid chioce.  Choose another square (1-9): ");
 				choice = System.Convert.ToUInt16(System.Console.ReadLine());
 			}
-			// TODO: Check for win / loss
+			gameOver = board.IsGameOver();
 			player = (player + 1) % players.Length;
-			gameOver = true;
+		}
+		if (board.GetWinner() == ' ') {
+			System.Console.WriteLine("Tie.  Good game.  Thanks for playing!");
+		} else {
+			System.Console.WriteLine("{0} wins.  Good game.  Thanks for playing!", board.GetWinner());
 		}
 	}
 }
