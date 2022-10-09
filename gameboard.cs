@@ -37,24 +37,29 @@ class GameBoard {
 	/// <param name="choice">A natural number representing the player's selection</param>
 	/// <returns>True if the player's choice is available, flase if it is unavailable</returns>
 	public bool SetSquare(char player, ushort choice) {
-		int square = choice - 1;
-		int row = square / 3;
-		int col = square % 3;
-		char core = (char)('1' + 3*row + col);
-		if (core == grid[row,col]) {
-			// Suitable to be replaced
-			grid[row, col] = player;
-			gameOver = CheckSquare(player, square);
-			if (gameOver) {
-				winner = player;
+		try {
+			int square = choice - 1;
+			int row = square / 3;
+			int col = square % 3;
+			char core = (char)('1' + 3*row + col);
+			if (core == grid[row,col]) {
+				// Suitable to be replaced
+				grid[row, col] = player;
+				gameOver = CheckSquare(player, square);
+				if (gameOver) {
+					winner = player;
+				}
+				roundCount += 1;
+				if (roundCount >= 3*3) {
+					gameOver = true; // Tie
+				}
+				return true;
+			} else {
+				// Unavailable square
+				return false;
 			}
-			roundCount += 1;
-			if (roundCount >= 3*3) {
-				gameOver = true; // Tie
-			}
-			return true;
-		} else {
-			// Unavailable square
+		} catch (System.IndexOutOfRangeException e) {
+			// Return false for an invalid choice (out of bounds)
 			return false;
 		}
 	}
