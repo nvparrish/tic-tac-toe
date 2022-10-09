@@ -1,4 +1,9 @@
 class TicTacToe {
+	///<summary>
+	///The Main method of the tac-tac-toe game
+	///</summary>
+	///<param name="args">Command line arguments (unused) </param>
+	///<returns>None</returns>
 	static public void Main(string[] args) {
 		System.Console.WriteLine("Welcome to the Tic Tac Toe game!");
 		GameBoard board = new GameBoard();
