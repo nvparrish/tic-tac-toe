@@ -21,6 +21,7 @@ class TicTacToe {
 			gameOver = board.IsGameOver();
 			player = (player + 1) % players.Length;
 		} while (!gameOver);
+		board.Display(); // Display one more time with the final board
 		if (board.GetWinner() == ' ') {
 			System.Console.WriteLine("Tie.  Good game.  Thanks for playing!");
 		} else {
