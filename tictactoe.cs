@@ -2,10 +2,10 @@ class TicTacToe {
 	static public void Main(string[] args) {
 		System.Console.WriteLine("Welcome to the Tic Tac Toe game!");
 		GameBoard board = new GameBoard();
-		bool gameOver = false;
+		bool gameOver;
 		int player = 0;
 		char[] players = new char[]{'X', 'O'};
-		while (!gameOver) {
+		do {
 			board.Display();
 			System.Console.Write(System.String.Format("{0}'s turn to choose a square (1-9): ", players[player]));
 			ushort choice = System.Convert.ToUInt16(System.Console.ReadLine());
@@ -15,7 +15,7 @@ class TicTacToe {
 			}
 			gameOver = board.IsGameOver();
 			player = (player + 1) % players.Length;
-		}
+		} while (!gameOver);
 		if (board.GetWinner() == ' ') {
 			System.Console.WriteLine("Tie.  Good game.  Thanks for playing!");
 		} else {
